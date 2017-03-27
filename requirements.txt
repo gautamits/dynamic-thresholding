@@ -1,0 +1,2 @@
+sudo apt install python-opencv python-imaging-tk python-numpy python-easygui 
+sudo pip install pillow

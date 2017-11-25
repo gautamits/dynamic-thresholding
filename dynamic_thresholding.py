@@ -16,7 +16,18 @@ def print_value(val):
 	for i in uppers:
 		u.append(i.get())
 	#call binary function
-	binary=get_binary((gray,l[0],u[0]))
+	b=[]#store binary of all threshold values in b[]
+	for p,q in zip(l,u):
+	    b.append(get_binary((gray,p,q)))
+	binary=np.zeros((b[0].shape[:2]))
+	for i in b:
+	    binary+=i
+	binary=binary/3
+	
+	
+	
+	#binary=np.sum(b)/len(b)
+	#binary=get_binary((gray,l[0],u[0]))
 	im = PIL.Image.fromarray(binary)
 	imgtk = PIL.ImageTk.PhotoImage(image=im)
 	#update image of page 3
@@ -26,7 +37,7 @@ def print_value(val):
 img = cv2.imread(sys.argv[1])
 height,width=img.shape[:2]
 #resize image
-ratio=float(700)/height
+ratio=float(600)/height
 img=cv2.resize(img,(int(ratio*width),int(ratio*height)))
 #convert t0 grayscale
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -50,7 +61,7 @@ for i in range(len(thresholds)):
 	uppers[i].set(255)
 	uppers[i].pack(side=LEFT,expand=1,fill=BOTH)
 #page 3 will show the image 
-page3 = Frame(tk,bg="blue",width=1200,height=700)
+page3 = Frame(tk,bg="blue",width=1000,height=600)
 im = PIL.Image.fromarray(gray)
 imgtk = PIL.ImageTk.PhotoImage(image=im)
 # Put it in the display window
